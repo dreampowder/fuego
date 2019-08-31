@@ -45,6 +45,13 @@ func main() {
 			Action:  collectionsCommandAction,
 		},
 		{
+			Name:    "delete-collection",
+			Aliases: []string{"dc"},
+			Usage:   "Deletes the entire collection",
+			ArgsUsage: "collection-path",
+			Action:  deleteCommandAction,
+		},
+		{
 			Name:      "add",
 			Aliases:   []string{"a"},
 			Usage:     "Add a new document to a collection",
