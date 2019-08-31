@@ -69,6 +69,14 @@ fuego collections
 
 Will return the list of projet's collections.
 
+### Delete a collection
+
+```sh
+fuego delete-collection CollectionName
+# 123 <- fuego prints the number of documents that has been deleted.
+```
+
+
 ### Writing and reading data
 
 You can add new documents, using JSON:

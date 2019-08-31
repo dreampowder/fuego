@@ -47,7 +47,7 @@ func main() {
 		{
 			Name:    "delete-collection",
 			Aliases: []string{"dc"},
-			Usage:   "Deletes the entire collection",
+			Usage:   "Deletes the entire collection. Returns number of deleted documents",
 			ArgsUsage: "collection-path",
 			Action:  deleteCommandAction,
 		},
