@@ -60,6 +60,7 @@ func main() {
 			Name:	"delete-document",
 			Aliases: []string{"dd"},
 			Usage: 	"Delete the document with the given id in a collection",
+			ArgsUsage: "collection-path document-id",
 			Action: deleteDocumentAction,
 		},
 		{
