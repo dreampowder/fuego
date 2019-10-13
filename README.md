@@ -74,6 +74,7 @@ Will return the list of projet's collections.
 ```sh
 fuego delete-collection CollectionName
 # 123 <- fuego prints the number of documents that has been deleted.
+
 ```
 
 

@@ -10,6 +10,7 @@ import (
 func addData(
 	client *firestore.Client,
 	collection string,
+	documentId string,
 	data string,
 	timestampify bool) (string, error) {
 
@@ -22,27 +23,38 @@ func addData(
 		timestampifyMap(object)
 	}
 
-	doc, _, err := client.
-		Collection(collection).
-		Add(context.Background(), object)
-
-	if err != nil {
-		return "", err
+	if documentId == "auto-id" {
+		doc, _, err := client.
+			Collection(collection).
+			Add(context.Background(), object)
+		if err != nil {
+			return "", err
+		}
+		return doc.ID, nil
+	}else{
+		_, err := client.
+			Collection(collection).
+			Doc(documentId).
+			Set(context.Background(), object)
+		if err != nil {
+			return "", err
+		}
+		return documentId, nil
 	}
-
-	return doc.ID, nil
 }
 
 func addCommandAction(c *cli.Context) error {
 	collectionPath := c.Args().First()
 	timestampify := c.Bool("timestamp")
+	documentId := c.String("documentid")
+
 	data := c.Args().Get(1)
 
 	client, err := createClient(credentials)
 	if err != nil {
 		return cliClientError(err)
 	}
-	id, err := addData(client, collectionPath, data, timestampify)
+	id, err := addData(client, collectionPath,documentId, data, timestampify)
 	if err != nil {
 		return cli.NewExitError(fmt.Sprintf("Failed to add data. \n%v", err), 81)
 	}

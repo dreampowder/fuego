@@ -35,6 +35,11 @@ func main() {
 			Name:  "timestamp, ts",
 			Usage: "treat strings values that match rfc3339 as timestamps",
 		},
+		cli.StringFlag{
+			Name:"documentid",
+			Value: "auto-id",
+			Usage: "specify an ID value for the new document (Automatic ID if not specified)",
+		},
 	}
 
 	app.Commands = []cli.Command{
@@ -52,10 +57,16 @@ func main() {
 			Action:  deleteCommandAction,
 		},
 		{
+			Name:	"delete-document",
+			Aliases: []string{"dd"},
+			Usage: 	"Delete the document with the given id in a collection",
+			Action: deleteDocumentAction,
+		},
+		{
 			Name:      "add",
 			Aliases:   []string{"a"},
 			Usage:     "Add a new document to a collection",
-			ArgsUsage: "collection-path json-document",
+			ArgsUsage: "collection-path document-id (Optional) json-document",
 			Action:    addCommandAction,
 			Flags:     writingFlags,
 		},

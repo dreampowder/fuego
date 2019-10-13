@@ -60,7 +60,27 @@ func deleteCommandAction(c *cli.Context) error {
 	if err != nil {
 		return cli.NewExitError(fmt.Sprintf("Failed to delete collection. \n%v", err), 81)
 	}
-	fmt.Fprintf(c.App.Writer, "%v\n", id)
+	_, _ = fmt.Fprintf(c.App.Writer, "%v\n", id)
+	defer client.Close()
+	return nil
+}
+
+
+func deleteDocumentAction(c *cli.Context) error {
+	collectionPath := c.Args().First()
+	documentId := c.Args().Get(1)
+	if documentId == "" {
+		return cli.NewExitError(fmt.Sprintf("please enter a documentId."), 81)
+	}
+	client, err := createClient(credentials)
+	if err != nil{
+		return cliClientError(err)
+	}
+	_,deleteErr := client.Collection(collectionPath).Doc(documentId).Delete(context.Background())
+	if deleteErr != nil {
+		return cliClientError(deleteErr)
+	}
+	_, _ = fmt.Fprintf(c.App.Writer, "%v deleted.\n", documentId)
 	defer client.Close()
 	return nil
 }
